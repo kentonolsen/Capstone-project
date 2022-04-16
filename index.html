@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic 8 Ball</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1 id="header1">Magic 8 Ball</h1>
+    <section id="container-1">
+        <input type="textbox" placeholder="Ask a question" id="question-input">
+        <button id="question-btn" class="button-styling">Ask question</button>
+        <p id="response-para"></p>
+    </section>
+    <section id="container-2">
+        <h3>Save Response</h3>
+        <input type="textbox" placeholder="Enter Username" id="save-input">
+        <button id="save-btn" class="button-styling">Save</button>
+    </section>  
+    <section id="container-3">
+        <h3>Username</h3>
+        <input type="textbox" placeholder="Enter Username" id="create-input">
+        <button id="username-btn" class="button-styling">Create user</button>
+        <p id="logged-user"></p>
+    </section>
+    <section id="container-4">
+        <h3>Get saved responses</h3>
+        <input type="textbox" placeholder="Enter Username" id="get-save-input">
+        <button id="saved-btn" class="button-styling">Get Responses</button>
+    </section>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
