@@ -22,7 +22,7 @@ module.exports = {
         );
         create table save_response (
             save_response_id serial primary key,
-            user_id integer references user(user_id),
+            user_id integer not null references user(user_id),
             user_question varchar(100),
             response varchar(50)
         );`).then(() => {

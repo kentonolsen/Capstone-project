@@ -13,13 +13,15 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 
 const app = express()
 let { seed } = require('./seed')
-let { questionFunction, userFunction } = require('./controller')
+let { questionFunction, userFunction, saveResponse } = require('./controller')
 app.use(express.json())
 app.use(cors())
-
+let userId = undefined
 app.get('/api/question', questionFunction)
 
 app.post('/api/users', userFunction)
+
+app.post('/api/saved', saveResponse)
 
 app.post('/seed', seed)
 

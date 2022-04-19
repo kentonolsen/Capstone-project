@@ -17,10 +17,22 @@ module.exports = {
     userFunction: (req, res) => {
         let newName = req.body.username
         console.log(req.body.username)
-        // sequelize.query(`
-        // insert into users(username)
-        // values (${newName})
-        // `)
+        sequelize.query(`
+        insert into users(username)
+        values (${newName})
+        `)
+        userId = sequelize.query(`
+        select user_id from users
+        where ${newName} = username`)
+        res.status(200).send()
+    },
+    saveResponse: (req, res) => {
+        let userName = req.body.username
+        let userQuestion = req.body.question
+        let serverRes = req.body.answer
+        sequelize.query(`
+        insert into save_response(user_id, user_question, response)
+        values (${userId}, ${userQuestion}, ${serverRes});`)
     }
 }
 const responseObj = {
