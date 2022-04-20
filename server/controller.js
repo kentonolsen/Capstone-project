@@ -1,3 +1,4 @@
+const { user } = require('pg/lib/defaults')
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -19,22 +20,28 @@ module.exports = {
         console.log(req.body.username)
         sequelize.query(`
         insert into users(username)
-        values (${newName})
+        values ('${newName}')
         `)
-        userId = sequelize.query(`
-        select user_id from users
-        where ${newName} = username`)
-        res.status(200).send()
+        userId++
     },
     saveResponse: (req, res) => {
-        let userName = req.body.username
         let userQuestion = req.body.question
-        let serverRes = req.body.answer
+        let serverRes = req.body.serverRes
+
         sequelize.query(`
         insert into save_response(user_id, user_question, response)
-        values (${userId}, ${userQuestion}, ${serverRes});`)
+        values (${userId}, '${userQuestion}', '${serverRes}');`)
+    },
+    getSaved: (req, res) => {
+        sequelize.query(`
+        select user_id, user_question, response from save_response
+        where user_id = ${userId}`)
+        .then(dbRes => {
+            res.status(200).send(dbRes[0])
+        })
     }
 }
+let userId = 0
 const responseObj = {
     1: 'It is certain',
     2: 'It is decidedly so',

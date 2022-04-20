@@ -1,3 +1,4 @@
+
 console.log('connected');
 
 const baseUrl = "http://localhost:6070";
@@ -14,6 +15,8 @@ const responsePara = document.querySelector('#response-para')
 const loggedUser = document.querySelector('#logged-user')
 let userConstant = ''
 let serverRes = responsePara.value
+let user_id = 0
+const section4 = document.querySelector('#saved-responses-sec')
 
 const questionHandler = () => {
     axios.get(`${baseUrl}/api/question`)
@@ -31,20 +34,30 @@ const userHandler = () => {
     loggedUser.innerHTML = `Logged in as ${userName}`
     createInput.value = ''
     console.log(userConstant)
+    user_id++
 }
 
 const saveHandler = () => {
     if(userConstant == ''){
         return alert('Not logged in')
     } else (
-    axios.post(`${baseUrl}/api/saved`, {username: userConstant, question: questionInput, answer: serverRes})
+    axios.post(`${baseUrl}/api/saved`, {question: questionInput.value, serverRes: responsePara.textContent})
     .then((res) => {
 
     })
     )}
 
+const savedResponses = () => {
+    section4.innerHTML = ''
+    axios.get(`${baseUrl}/api/savedres`)
+    .then(res => {
+        res.data.forEach(elem => {
+        let responseCard = `<p>Question: ${elem.user_question} Answer: ${elem.response}</p>`
+        section4.innerHTML += responseCard
+    })
+})}
 
 questionBtn.addEventListener('click', questionHandler);
 saveBtn.addEventListener('click', saveHandler);
 usernameBtn.addEventListener('click', userHandler);
-// responseBtn.addEventListener('click', );
+responseBtn.addEventListener('click', savedResponses);
